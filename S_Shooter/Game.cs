@@ -16,6 +16,8 @@ namespace S_Shooter
         Sprite2D brandon;
         Sprite2D alan;
 
+        Collision coll;
+
   
 
         List<Shape2D> bullets = new List<Shape2D>();
@@ -37,7 +39,7 @@ namespace S_Shooter
             brandon = new Sprite2D(new Vector2(10, bb.Position.Y + 32), new Vector2(32, 32), "Enemies/brandon", "enemy-1");
             alan = new Sprite2D(new Vector2(10, brandon.Position.Y + 32), new Vector2(32, 32), "Enemies/alan", "enemy-2");
 
-            
+            coll = new Collision(); 
         }
 
         public override void OnDraw()
@@ -70,7 +72,7 @@ namespace S_Shooter
             foreach(Shape2D bullet in this.bullets)
             {
                 bullet.Position.Y -= 4;
-                if (bullet.Position.Y < 0)
+                if (bullet.Position.Y < 0 || coll.Collides(bullet.Position, alan.Position, bullet.Scale, alan.Scale))
                 {
                     bullet.DestroySelf();
                     bullets.Remove(bullet);
@@ -83,7 +85,7 @@ namespace S_Shooter
             //Instantiate bullet to bullets array.
             //Projectiles
             Shape2D bullet = new Shape2D(
-                    new Vector2(player.Position.X + player.Scale.X / 2, player.Position.Y + player.Scale.Y),
+                    new Vector2((player.Position.X + player.Scale.X / 2) + 4, player.Position.Y + player.Scale.Y),
                     new Vector2(8, 8),
                     "player-bullet"
                 );

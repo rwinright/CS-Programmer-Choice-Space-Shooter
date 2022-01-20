@@ -5,6 +5,11 @@
       "ProjectGuid": "53aa4f07-7034-4aa0-b815-f45926a40cef",
       "DisplayName": "S_Shooter",
       "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
     }
   },
   "NextColorIndex": 1
