@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "53aa4f07-7034-4aa0-b815-f45926a40cef": {
+      "ProjectGuid": "53aa4f07-7034-4aa0-b815-f45926a40cef",
+      "DisplayName": "S_Shooter",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
