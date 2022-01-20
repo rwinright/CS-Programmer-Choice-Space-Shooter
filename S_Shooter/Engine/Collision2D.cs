@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace S_Shooter.Engine
 {
-    public class Collision
+    public class Collision2D
     {
         public bool Collides(Vector2 onePos, Vector2 twoPos, Vector2 oneScale, Vector2 twoScale)
         {

@@ -16,7 +16,7 @@ namespace S_Shooter
         Sprite2D brandon;
         Sprite2D alan;
 
-        Collision coll;
+        Collision2D coll;
 
   
 
@@ -39,7 +39,7 @@ namespace S_Shooter
             brandon = new Sprite2D(new Vector2(10, bb.Position.Y + 32), new Vector2(32, 32), "Enemies/brandon", "enemy-1");
             alan = new Sprite2D(new Vector2(10, brandon.Position.Y + 32), new Vector2(32, 32), "Enemies/alan", "enemy-2");
 
-            coll = new Collision(); 
+            coll = new Collision2D(); 
         }
 
         public override void OnDraw()
