@@ -147,12 +147,14 @@ namespace S_Shooter
             }
         }
 
+        bool leftShoot = false;
         public void Shoot()
         {
             //Instantiate bullet to bullets array.
             //Projectiles
+            leftShoot = !leftShoot;
             Shape2D bullet = new Shape2D(
-                    new Vector2((player.Position.X + player.Scale.X / 2) + 4, player.Position.Y + player.Scale.Y),
+                    new Vector2(((player.Position.X + player.Scale.X / 2) - 4) - (leftShoot ? 8 : -8), player.Position.Y + player.Scale.Y - 8),
                     new Vector2(8, 8),
                     "player-bullet"
                 );

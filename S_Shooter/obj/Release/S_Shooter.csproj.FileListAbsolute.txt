@@ -1,0 +1,7 @@
+C:\Users\venpr\source\repos\S_Shooter\S_Shooter\bin\Release\S_Shooter.exe.config
+C:\Users\venpr\source\repos\S_Shooter\S_Shooter\bin\Release\S_Shooter.exe
+C:\Users\venpr\source\repos\S_Shooter\S_Shooter\bin\Release\S_Shooter.pdb
+C:\Users\venpr\source\repos\S_Shooter\S_Shooter\obj\Release\S_Shooter.csproj.SuggestedBindingRedirects.cache
+C:\Users\venpr\source\repos\S_Shooter\S_Shooter\obj\Release\S_Shooter.csproj.CoreCompileInputs.cache
+C:\Users\venpr\source\repos\S_Shooter\S_Shooter\obj\Release\S_Shooter.exe
+C:\Users\venpr\source\repos\S_Shooter\S_Shooter\obj\Release\S_Shooter.pdb
