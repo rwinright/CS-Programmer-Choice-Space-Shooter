@@ -68,12 +68,10 @@ namespace S_Shooter
 
             if (this.shooting)
             {
-                //Increment while shooting button is held down.
                 this.bulletFrames++;
                 if (this.bulletFrames > 250 && bullets.Count < 5 && this.enemies.Count > 0)
                 {
                     this.Shoot();
-                    //reset to 0 to start the count over again
                     this.bulletFrames = 0;
                 }
             }
@@ -150,10 +148,9 @@ namespace S_Shooter
         bool leftShoot = false;
         public void Shoot()
         {
-            //Instantiate bullet to bullets array.
-            //Projectiles
             leftShoot = !leftShoot;
             Shape2D bullet = new Shape2D(
+                    //Sweet trick to alternate fire. (I could have done this different, but I didn't want to take the time to refactor.)
                     new Vector2(((player.Position.X + player.Scale.X / 2) - 4) - (leftShoot ? 8 : -8), player.Position.Y + player.Scale.Y - 8),
                     new Vector2(8, 8),
                     "player-bullet"
