@@ -23,9 +23,11 @@ namespace S_Shooter.Engine
         private Canvas Window = null;
         private Thread GameLoopThread = null;
 
+        public static bool pauseGame = false;
+
         private static List<Shape2D> AllShapes = new List<Shape2D>();
         private static List<Sprite2D> AllSprites = new List<Sprite2D>();
-        
+        private static List<UIText> AllText = new List<UIText>();
 
         public Color BgColor = Color.Black;
 
@@ -42,7 +44,6 @@ namespace S_Shooter.Engine
 
             GameLoopThread = new Thread(GameLoop);
             GameLoopThread.Start();
-
             Application.Run(Window);
         }
 
@@ -74,11 +75,20 @@ namespace S_Shooter.Engine
         {
             AllSprites.Remove(sprite);
         }
+        public static void RegisterText(UIText text)
+        {
+            AllText.Add(text);
+        }
+
+        public static void RemoveText(UIText text)
+        {
+            AllText.Remove(text);
+        }
 
         void GameLoop()
         {
             OnLoad();
-            while(GameLoopThread.IsAlive)
+            while(GameLoopThread.IsAlive && pauseGame == false)
             {
                 try
                 {
@@ -105,7 +115,13 @@ namespace S_Shooter.Engine
             foreach(Sprite2D sprite in AllSprites)
             {
                 if(sprite != null)
-                    g.DrawImage(sprite.Sprite, sprite.Position.X, sprite.Position.Y, sprite.Scale.X, sprite.Scale.Y); 
+                    g.DrawImage(sprite.Sprite, sprite.Position.X, sprite.Position.Y, sprite.Scale.X, sprite.Scale.Y);
+            }
+
+            foreach(UIText text in AllText)
+            {
+                if (!(AllText.Count > 0)) return;
+                g.DrawString(text.Text, text.DrawFont, text.DrawBrush, text.Position.X, text.Position.Y, text.drawFormat);
             }
         }
 

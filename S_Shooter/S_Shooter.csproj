@@ -52,6 +52,7 @@
     <Compile Include="Engine\Log.cs" />
     <Compile Include="Engine\Shape2D.cs" />
     <Compile Include="Engine\Sprite2D.cs" />
+    <Compile Include="Engine\UIText.cs" />
     <Compile Include="Engine\Vector2.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Program.cs" />
