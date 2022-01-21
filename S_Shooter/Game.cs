@@ -34,7 +34,7 @@ namespace S_Shooter
             BgColor = Color.Black;
 
             //Player sprites
-            player = new Sprite2D(new Vector2(10, 10), new Vector2(32, 32), "Ships/ship", "player");
+            player = new Sprite2D(new Vector2(300 - 32, 400), new Vector2(32, 32), "Ships/ship", "player");
             //Enemy sprites
 
             coll = new Collision2D(); 
@@ -48,34 +48,51 @@ namespace S_Shooter
         //Calculate time between bullets
         int bulletFrames = 0;
         int timeBetweenEnemies = 0;
+        int frames = 0;
         public override void OnUpdate()
         {
 
             int moveVertical = (this.down ? 1 : 0) - (this.up ? 1 : 0);
             int moveHorizontal = (this.right ? 1 : 0) - (this.left ? 1 : 0);
 
+            if(this.player.Position.X < 0) this.player.Position.X = 0;
+            if(this.player.Position.X > 600 - 48) this.player.Position.X = 600 - 48;
+            if(this.player.Position.Y < 0)  this.player.Position.Y = 0;
+            if(this.player.Position.Y > 500 - 78) this.player.Position.Y = 500- 78;
+            
             this.player.Position.X += moveHorizontal * 1;
             this.player.Position.Y += moveVertical * 1;
 
+            this.frames++;
             this.timeBetweenEnemies++;
 
             if(this.shooting)
             {
                 //Increment while shooting button is held down.
                 this.bulletFrames++;
-                if(this.bulletFrames > 100 && bullets.Count < 5)
+                if(this.bulletFrames > 250 && bullets.Count < 5 && this.enemies.Count > 0)
                 {
                     this.Shoot();
                     //reset to 0 to start the count over again
                     this.bulletFrames = 0;
                 }
             }
+            foreach(Sprite2D enemy in enemies)
+            {
+                if (enemy == null) return;
+                enemy.Position.Y += 0.5f;
+                if(enemy.Tag == "enemy-0")
+                {
+                    enemy.Position.X += (float)Math.Cos(this.frames/100) * 0.5f;
+                }
+            }
             foreach(Shape2D bullet in this.bullets)
             {
+                if(bullet == null) return;
                 bullet.Position.Y -= 4;
                 foreach(Sprite2D enemy in enemies)
                 {
-
+                    if(enemy == null) return;
                     if (coll.Collides(bullet.Position, enemy.Position, bullet.Scale, enemy.Scale))
                     {
                         bullet.DestroySelf();
@@ -92,24 +109,24 @@ namespace S_Shooter
             }
 
             //Instantiate enemies
-           if(timeBetweenEnemies > 100)
+           if(timeBetweenEnemies > 1000)
             {
                 Random randomSpawnLocation = new Random();
 
                 Random randomEnemy = new Random();
                 randomEnemy.Next(1, 3);
-                switch(randomEnemy.Next(1, 3))
+                switch(randomEnemy.Next(1, 4))
                 {
                     case 1:
-                        alan = new Sprite2D(new Vector2(randomSpawnLocation.Next(32, 468), 57), new Vector2(32, 32), "Enemies/alan", "enemy-2");
+                        alan = new Sprite2D(new Vector2(randomSpawnLocation.Next(32, 468), -32), new Vector2(32, 32), "Enemies/alan", "enemy-2");
                         enemies.Add(alan);
                         break;
                     case 2:
-                        bb = new Sprite2D(new Vector2(randomSpawnLocation.Next(32, 468), 45), new Vector2(32, 32), "Enemies/bb", "enemy-0");
+                        bb = new Sprite2D(new Vector2(randomSpawnLocation.Next(32, 468), -32), new Vector2(32, 32), "Enemies/bb", "enemy-0");
                         enemies.Add(bb);
                         break;
                     case 3:
-                        brandon = new Sprite2D(new Vector2(randomSpawnLocation.Next(32, 468), 100), new Vector2(32, 32), "Enemies/brandon", "enemy-1");
+                        brandon = new Sprite2D(new Vector2(randomSpawnLocation.Next(32, 468), -32), new Vector2(32, 32), "Enemies/brandon", "enemy-1");
                         enemies.Add(brandon);
                         break;
                 }
@@ -146,7 +163,5 @@ namespace S_Shooter
             if (e.KeyCode == Keys.S || e.KeyCode == Keys.Down) this.down = false;
             if (e.KeyCode == Keys.Space) this.shooting = false;
         }
-
-
     }
 }

@@ -104,7 +104,8 @@ namespace S_Shooter.Engine
 
             foreach(Sprite2D sprite in AllSprites)
             {
-                g.DrawImage(sprite.Sprite, sprite.Position.X, sprite.Position.Y, sprite.Scale.X, sprite.Scale.Y); 
+                if(sprite != null)
+                    g.DrawImage(sprite.Sprite, sprite.Position.X, sprite.Position.Y, sprite.Scale.X, sprite.Scale.Y); 
             }
         }
 
