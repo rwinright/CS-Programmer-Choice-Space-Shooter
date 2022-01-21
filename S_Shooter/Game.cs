@@ -21,6 +21,7 @@ namespace S_Shooter
   
 
         List<Shape2D> bullets = new List<Shape2D>();
+        List<Sprite2D> enemies = new List<Sprite2D>();
 
         bool left, right, up, down, shooting;
         public Game() : base(new Vector2(600, 500), "Space Shooter")
@@ -35,9 +36,6 @@ namespace S_Shooter
             //Player sprites
             player = new Sprite2D(new Vector2(10, 10), new Vector2(32, 32), "Ships/ship", "player");
             //Enemy sprites
-            bb = new Sprite2D(new Vector2(10, player.Position.Y + 32), new Vector2(32, 32), "Enemies/bb", "enemy-0");
-            brandon = new Sprite2D(new Vector2(10, bb.Position.Y + 32), new Vector2(32, 32), "Enemies/brandon", "enemy-1");
-            alan = new Sprite2D(new Vector2(10, brandon.Position.Y + 32), new Vector2(32, 32), "Enemies/alan", "enemy-2");
 
             coll = new Collision2D(); 
         }
@@ -49,20 +47,23 @@ namespace S_Shooter
         
         //Calculate time between bullets
         int bulletFrames = 0;
+        int timeBetweenEnemies = 0;
         public override void OnUpdate()
         {
 
             int moveVertical = (this.down ? 1 : 0) - (this.up ? 1 : 0);
             int moveHorizontal = (this.right ? 1 : 0) - (this.left ? 1 : 0);
 
-            this.player.Position.X += moveHorizontal * 10;
-            this.player.Position.Y += moveVertical * 10;
-            
+            this.player.Position.X += moveHorizontal * 1;
+            this.player.Position.Y += moveVertical * 1;
+
+            this.timeBetweenEnemies++;
+
             if(this.shooting)
             {
                 //Increment while shooting button is held down.
                 this.bulletFrames++;
-                if(this.bulletFrames > 10 && bullets.Count < 5)
+                if(this.bulletFrames > 100 && bullets.Count < 5)
                 {
                     this.Shoot();
                     //reset to 0 to start the count over again
@@ -72,11 +73,47 @@ namespace S_Shooter
             foreach(Shape2D bullet in this.bullets)
             {
                 bullet.Position.Y -= 4;
-                if (bullet.Position.Y < 0 || coll.Collides(bullet.Position, alan.Position, bullet.Scale, alan.Scale))
+                foreach(Sprite2D enemy in enemies)
                 {
-                    bullet.DestroySelf();
-                    bullets.Remove(bullet);
+
+                    if (coll.Collides(bullet.Position, enemy.Position, bullet.Scale, enemy.Scale))
+                    {
+                        bullet.DestroySelf();
+                        bullets.Remove(bullet);
+                        enemy.DestroySelf();
+                        enemies.Remove(enemy);
+                    }
                 }
+                if (bullet.Position.Y < 10) 
+                {
+                    bullets.Remove(bullet);
+                    bullet.DestroySelf();
+                }
+            }
+
+            //Instantiate enemies
+           if(timeBetweenEnemies > 100)
+            {
+                Random randomSpawnLocation = new Random();
+
+                Random randomEnemy = new Random();
+                randomEnemy.Next(1, 3);
+                switch(randomEnemy.Next(1, 3))
+                {
+                    case 1:
+                        alan = new Sprite2D(new Vector2(randomSpawnLocation.Next(32, 468), 57), new Vector2(32, 32), "Enemies/alan", "enemy-2");
+                        enemies.Add(alan);
+                        break;
+                    case 2:
+                        bb = new Sprite2D(new Vector2(randomSpawnLocation.Next(32, 468), 45), new Vector2(32, 32), "Enemies/bb", "enemy-0");
+                        enemies.Add(bb);
+                        break;
+                    case 3:
+                        brandon = new Sprite2D(new Vector2(randomSpawnLocation.Next(32, 468), 100), new Vector2(32, 32), "Enemies/brandon", "enemy-1");
+                        enemies.Add(brandon);
+                        break;
+                }
+                timeBetweenEnemies = 0;
             }
         }
 
