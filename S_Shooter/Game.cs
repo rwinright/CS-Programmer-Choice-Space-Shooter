@@ -69,7 +69,7 @@ namespace S_Shooter
             if (this.shooting)
             {
                 this.bulletFrames++;
-                if (this.bulletFrames > 250 && bullets.Count < 5 && this.enemies.Count > 0)
+                if (this.bulletFrames > 150  && bullets.Count < 5)
                 {
                     this.Shoot();
                     this.bulletFrames = 0;
@@ -78,7 +78,7 @@ namespace S_Shooter
             foreach (Sprite2D enemy in enemies)
             {
                 if (enemy == null) return;
-                
+
                 if (enemy.Position.Y >= 500)
                 {
                     scoreText.DestroySelf();
